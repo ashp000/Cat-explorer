@@ -103,6 +103,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    setCats([]);
     setPage(0);
     loadCats(0, selectedBreed);
   }, [selectedBreed, loadCats]);
