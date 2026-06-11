@@ -38,7 +38,7 @@ export function BreedFilter({ breeds, selected, onSelect }: BreedFilterProps) {
   };
 
   const sortedBreeds = [...breeds].sort((a, b) => a.name.localeCompare(b.name));
-  const letters = [...new Set(sortedBreeds.map((b) => b.name[0].toUpperCase()))];
+  const letters = Array.from(new Set(sortedBreeds.map((b) => b.name[0].toUpperCase())));
   const filteredBreeds = selectedLetter
     ? sortedBreeds.filter((b) => b.name[0].toUpperCase() === selectedLetter)
     : sortedBreeds;
