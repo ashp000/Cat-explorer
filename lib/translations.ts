@@ -29,6 +29,8 @@ export const translations = {
     catNotFound: "Cat not found.",
     years: "yrs",
     kg: "kg",
+    previous: "Previous",
+    next: "Next",
   },
   pt: {
     appName: "CatExplorer",
@@ -58,5 +60,7 @@ export const translations = {
     catNotFound: "Gato não encontrado.",
     years: "anos",
     kg: "kg",
+    previous: "Anterior",
+    next: "Próximo",
   },
 };
