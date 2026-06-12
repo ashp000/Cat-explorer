@@ -2,26 +2,33 @@ const API_KEY = process.env.NEXT_PUBLIC_CAT_API_KEY;
 const BASE_URL = "https://api.thecatapi.com/v1";
 
 export async function fetchCats(page: number = 0, breedId?: string) {
-  const params = new URLSearchParams({
-    limit: "12",
-    page: String(page),
-    has_breeds: "1",
-    ...(breedId && { breed_ids: breedId }),
-  });
+  try {
+    const params = new URLSearchParams({
+      limit: "12",
+      page: String(page),
+      has_breeds: "1",
+      ...(breedId && { breed_ids: breedId }),
+    });
 
-  const res = await fetch(`${BASE_URL}/images/search?${params}`, {
-    headers: { "x-api-key": API_KEY! },
-  });
+    const res = await fetch(`${BASE_URL}/images/search?${params}`, {
+      headers: { "x-api-key": API_KEY! },
+    });
 
-  return res.json();
+    return res.json();
+  } catch {
+    return [];
+  }
 }
 
 export async function fetchBreeds() {
-  const res = await fetch(`${BASE_URL}/breeds`, {
-    headers: { "x-api-key": API_KEY! },
-  });
-
-  return res.json();
+  try {
+    const res = await fetch(`${BASE_URL}/breeds`, {
+      headers: { "x-api-key": API_KEY! },
+    });
+    return res.json();
+  } catch {
+    return [];
+  }
 }
 
 export async function fetchFavorites() {
