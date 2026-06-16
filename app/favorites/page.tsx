@@ -107,7 +107,7 @@ export default function FavoritesPage() {
         )}
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 min-h-[600px] content-start">
         {paginatedFavorites.map((fav) => (
           <CatCard
             key={fav.id}
@@ -121,26 +121,34 @@ export default function FavoritesPage() {
       </div>
 
       {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex items-center justify-center gap-2 pt-4">
           <button
             onClick={() => setCurrentPage((p) => Math.max(0, p - 1))}
             disabled={currentPage === 0}
-            className="flex items-center gap-1 px-4 py-2 rounded-lg border border-border text-muted-foreground hover:text-foreground hover:border-primary transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            className="w-9 h-9 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
           >
             <ChevronLeft size={16} />
-            {t.previous}
           </button>
 
-          <span className="text-sm text-muted-foreground">
-            {currentPage + 1} / {totalPages}
-          </span>
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentPage(i)}
+              className={`w-9 h-9 rounded-lg border text-sm font-medium transition-colors ${
+                currentPage === i
+                  ? "border-primary text-primary bg-primary/10"
+                  : "border-border text-muted-foreground hover:text-primary hover:border-primary"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
 
           <button
             onClick={() => setCurrentPage((p) => Math.min(totalPages - 1, p + 1))}
             disabled={currentPage === totalPages - 1}
-            className="flex items-center gap-1 px-4 py-2 rounded-lg border border-border text-muted-foreground hover:text-foreground hover:border-primary transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            className="w-9 h-9 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
           >
-            {t.next}
             <ChevronRight size={16} />
           </button>
         </div>

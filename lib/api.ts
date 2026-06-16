@@ -1,5 +1,6 @@
 const API_KEY = process.env.NEXT_PUBLIC_CAT_API_KEY;
 const BASE_URL = "https://api.thecatapi.com/v1";
+const SUB_ID = "user-default"; // identificador fixo do usuário
 
 export async function fetchCats(page: number = 0, breedId?: string) {
   try {
@@ -33,7 +34,7 @@ export async function fetchBreeds() {
 
 export async function fetchFavorites() {
   try {
-    const res = await fetch(`${BASE_URL}/favourites`, {
+    const res = await fetch(`${BASE_URL}/favourites?sub_id=${SUB_ID}`, {
       headers: { "x-api-key": API_KEY! },
     });
     return res.json();
@@ -50,7 +51,7 @@ export async function addFavorite(imageId: string) {
         "x-api-key": API_KEY!,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ image_id: imageId }),
+      body: JSON.stringify({ image_id: imageId, sub_id: SUB_ID }),
     });
     return res.json();
   } catch {

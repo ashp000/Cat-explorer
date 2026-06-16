@@ -2,10 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Heart } from "lucide-react";
 import { useLocale } from "@/components/LocaleContext";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { fetchFavorites, addFavorite, removeFavorite } from "@/lib/api";
 
 const API_KEY = process.env.NEXT_PUBLIC_CAT_API_KEY;
 
@@ -51,6 +52,9 @@ export default function CatDetailPage() {
   const [cat, setCat] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [moreCats, setMoreCats] = useState<any[]>([]);
+  const [isFavorited, setIsFavorited] = useState(false);
+  const [favoriteId, setFavoriteId] = useState<number | null>(null);
+  const [loadingFav, setLoadingFav] = useState(false);
 
   useEffect(() => {
     getCat(id).then((data) => {
@@ -62,7 +66,29 @@ export default function CatDetailPage() {
         getMoreCats(breedId, id).then(setMoreCats);
       }
     });
+
+    fetchFavorites().then((favs) => {
+      const found = favs.find((f: any) => f.image_id === id);
+      if (found) {
+        setIsFavorited(true);
+        setFavoriteId(found.id);
+      }
+    });
   }, [id]);
+
+  const handleToggleFavorite = async () => {
+    setLoadingFav(true);
+    if (isFavorited && favoriteId) {
+      await removeFavorite(favoriteId);
+      setIsFavorited(false);
+      setFavoriteId(null);
+    } else {
+      const res = await addFavorite(id);
+      setIsFavorited(true);
+      setFavoriteId(res.id);
+    }
+    setLoadingFav(false);
+  };
 
   if (loading) {
     return (
@@ -103,11 +129,25 @@ export default function CatDetailPage() {
         </div>
 
         <div className="space-y-6">
-          <div>
-            <h1 className="text-3xl font-bold">{breed?.name || t.unknownBreed}</h1>
-            {breed?.origin && (
-              <p className="text-muted-foreground mt-1">🌍 {breed.origin}</p>
-            )}
+          <div className="flex items-start justify-between">
+            <div>
+              <h1 className="text-3xl font-bold">{breed?.name || t.unknownBreed}</h1>
+              {breed?.origin && (
+                <p className="text-muted-foreground mt-1">🌍 {breed.origin}</p>
+              )}
+            </div>
+
+            <button
+              onClick={handleToggleFavorite}
+              disabled={loadingFav}
+              className={`w-11 h-11 rounded-xl border flex items-center justify-center transition-colors disabled:opacity-50 ${
+                isFavorited
+                  ? "bg-red-500 border-red-500 text-white hover:bg-red-600"
+                  : "border-border text-muted-foreground hover:border-red-400 hover:text-red-400"
+              }`}
+            >
+              <Heart size={20} fill={isFavorited ? "currentColor" : "none"} />
+            </button>
           </div>
 
           {breed?.description && (

@@ -59,9 +59,15 @@ export function Navbar() {
           {/* Botão de idioma */}
           <button
             onClick={() => setLocale(locale === "en" ? "pt" : "en")}
-            className="w-9 h-9 rounded-lg border border-border flex items-center justify-center text-xs font-bold text-muted-foreground hover:text-primary hover:border-primary transition-colors"
+            className="w-9 h-9 rounded-lg border border-border flex items-center justify-center hover:border-primary transition-colors overflow-hidden p-1"
           >
-            {locale === "en" ? "PT" : "EN"}
+            <Image
+              src={locale === "en" ? "/flag eua.png" : "/flag br.png"}
+              alt={locale === "en" ? "English" : "Português"}
+              width={28}
+              height={28}
+              className="object-contain"
+            />
           </button>
 
           {mounted && (
