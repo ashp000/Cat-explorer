@@ -19,7 +19,7 @@ export function Navbar() {
   return (
     <nav className="border-b border-border bg-background/80 backdrop-blur-sm sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 font-bold text-xl">
+        <Link href="/feed" className="flex items-center gap-2 font-bold text-xl">
           <div className="w-9 h-9 flex-shrink-0">
             {mounted ? (
               <Image
@@ -38,9 +38,9 @@ export function Navbar() {
 
         <div className="flex items-center gap-4">
           <Link
-            href="/"
+            href="/feed"
             className={`text-sm font-medium transition-colors hover:text-primary ${
-              pathname === "/" ? "text-primary" : "text-muted-foreground"
+              pathname === "/feed" ? "text-primary" : "text-muted-foreground"
             }`}
           >
             {t.feed}
