@@ -13,8 +13,8 @@ interface CometCardProps {
 export function CometCard({
   children,
   className,
-  rotateDepth = 17.5,
-  translateDepth = 20,
+  rotateDepth = 6,
+  translateDepth = 6,
 }: CometCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
 
@@ -36,8 +36,8 @@ export function CometCard({
       const tx = dx * translateDepth * 0.3;
       const ty = dy * translateDepth * 0.3;
 
-      card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translate(${tx}px, ${ty}px) scale(1.04)`;
-      card.style.boxShadow = `${-dx * 20}px ${-dy * 20}px 45px rgba(0,0,0,0.25)`;
+      card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translate(${tx}px, ${ty}px) scale(1.02)`;
+      card.style.boxShadow = `${-dx * 8}px ${-dy * 8}px 20px rgba(0,0,0,0.2)`;
 
       const shimmer = card.querySelector<HTMLDivElement>("[data-shimmer]");
       if (shimmer) {
@@ -76,13 +76,12 @@ export function CometCard({
         className={cn("relative will-change-transform", className)}
         style={{ transformStyle: "preserve-3d" }}
       >
-        {/* shimmer overlay — pointer-events-none para não bloquear cliques */}
         <div
           data-shimmer
           className="pointer-events-none absolute inset-0 z-10 rounded-[inherit] opacity-0 transition-opacity duration-200"
           style={{
             background:
-              "radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.15) 0%, transparent 60%)",
+              "radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.12) 0%, transparent 60%)",
           }}
         />
         {children}
