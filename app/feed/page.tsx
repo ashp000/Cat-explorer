@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
-import { fetchCats, fetchBreeds, addFavorite, removeFavorite, fetchFavorites } from "@/lib/api";
+import { fetchCats, fetchBreeds, addFavorite, removeFavorite, fetchFavorites, PAGE_LIMIT } from "@/lib/api";
 import { CatCard } from "@/components/CatCard";
+import { SkeletonCard } from "@/components/ui/SkeletonCard";
 import { BreedFilter } from "@/components/BreedFilter";
 import Image from "next/image";
 import { useTheme } from "next-themes";
@@ -37,6 +38,7 @@ export default function FeedPage() {
   const loadingRef = useRef(false);
   const readyRef = useRef(false);
   const breedRef = useRef("");
+  const lastScrollCallRef = useRef(0);
 
   useEffect(() => {
     setTimeout(() => setVisible(true), 50);
@@ -46,10 +48,15 @@ export default function FeedPage() {
     if (loadingRef.current) return;
     loadingRef.current = true;
     setLoading(true);
-    const data = await fetchCats(pageRef.current, breedRef.current);
-    setCats((prev) => pageRef.current === 0 ? data : [...prev, ...data]);
-    setLoading(false);
-    loadingRef.current = false;
+    try {
+      const data = await fetchCats(pageRef.current, breedRef.current);
+      setCats((prev) => pageRef.current === 0 ? data : [...prev, ...data]);
+    } catch (err) {
+      console.error("Erro ao buscar gatos:", err);
+    } finally {
+      setLoading(false);
+      loadingRef.current = false;
+    }
   }, []);
 
   const resetAndLoad = useCallback(async (breedId: string) => {
@@ -73,9 +80,14 @@ export default function FeedPage() {
   useEffect(() => {
     const handleScroll = () => {
       if (loadingRef.current || !readyRef.current) return;
+
+      const now = Date.now();
+      if (now - lastScrollCallRef.current < 500) return;
+
       const scrolled = window.scrollY + window.innerHeight;
       const total = document.documentElement.scrollHeight;
       if (scrolled >= total - 300) {
+        lastScrollCallRef.current = now;
         pageRef.current += 1;
         loadMore();
       }
@@ -124,10 +136,11 @@ export default function FeedPage() {
             onToggleFavorite={handleToggleFavorite}
           />
         ))}
-      </div>
 
-      <div className="flex justify-center py-8">
-        {loading && <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />}
+        {loading &&
+          Array.from({ length: PAGE_LIMIT }).map((_, i) => (
+            <SkeletonCard key={`skeleton-${i}`} />
+          ))}
       </div>
     </div>
   );

@@ -33,10 +33,8 @@ export function CatCard({
           draggable={false}
         />
 
-        {/* gradiente inferior sempre visível */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent rounded-2xl" />
 
-        {/* botão de favorito */}
         <button
           onClick={(e) => {
             e.preventDefault();
@@ -44,7 +42,7 @@ export function CatCard({
             onToggleFavorite(id);
           }}
           aria-label={isFavorited ? "Remover dos favoritos" : "Adicionar aos favoritos"}
-          className="absolute top-2.5 right-2.5 z-20 p-1.5 rounded-full bg-black/30 backdrop-blur-sm transition-all duration-200 hover:scale-110 active:scale-95"
+          className="absolute top-2.5 right-2.5 z-20 p-1.5 rounded-full bg-black/30 backdrop-blur-sm transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer"
         >
           <Heart
             size={16}
@@ -56,7 +54,6 @@ export function CatCard({
           />
         </button>
 
-        {/* info + botão ver detalhes — aparece no hover */}
         <div className="absolute bottom-0 left-0 right-0 z-20 px-3 pb-3 flex flex-col gap-2">
           {breed && (
             <p className="text-white text-xs font-medium truncate drop-shadow-sm">
@@ -65,7 +62,7 @@ export function CatCard({
           )}
           <Link
             href={`/${id}`}
-            className="w-full text-center text-xs font-semibold py-1.5 rounded-lg bg-white/20 backdrop-blur-sm text-white border border-white/30 hover:bg-white/30 transition-all duration-200 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0"
+            className="w-full text-center text-xs font-semibold py-1.5 rounded-lg bg-white/20 backdrop-blur-sm text-white border border-white/30 hover:bg-white/30 transition-all duration-200 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 cursor-pointer"
           >
             Ver detalhes →
           </Link>

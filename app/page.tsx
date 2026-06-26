@@ -47,7 +47,6 @@ export default function SplashPage() {
 
       <div className="absolute inset-0 bg-black/30" />
 
-      {/* conteúdo */}
       <div className="relative z-10 flex flex-col items-center gap-4">
         <div className={`transition-all duration-500 ${leaving ? "scale-150 opacity-0" : ""}`}>
           {mounted && (
@@ -69,7 +68,7 @@ export default function SplashPage() {
 
       <button
         onClick={handleClick}
-        className="relative z-10 group px-10 py-4 rounded-full bg-white/10 backdrop-blur-sm text-white border border-white/30 font-semibold text-lg transition-all duration-300 hover:scale-105 hover:bg-white/20 active:scale-95 shadow-lg overflow-hidden"
+        className="relative z-10 group px-10 py-4 rounded-full bg-white/10 backdrop-blur-sm text-white border border-white/30 font-semibold text-lg transition-all duration-300 hover:scale-105 hover:bg-white/20 active:scale-95 shadow-lg overflow-hidden cursor-pointer"
       >
         <span className="relative z-10 flex items-center gap-2">
           {t.enterButton}

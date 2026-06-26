@@ -47,7 +47,7 @@ export function BreedFilter({ breeds, selected, onSelect }: BreedFilterProps) {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-sm font-medium text-muted-foreground hover:text-foreground hover:border-primary transition-colors"
+        className="flex items-center gap-2 px-4 py-2 rounded-lg border border-border text-sm font-medium text-muted-foreground hover:text-foreground hover:border-primary transition-colors cursor-pointer"
       >
         <SlidersHorizontal size={16} />
         {selectedBreed ? selectedBreed.name : t.allBreeds}
@@ -86,7 +86,7 @@ export function BreedFilter({ breeds, selected, onSelect }: BreedFilterProps) {
           >
             <div className="flex items-center justify-between p-4 border-b border-border flex-shrink-0">
               <h2 className="font-semibold text-lg">{t.filterByBreed}</h2>
-              <button onClick={handleClose} className="text-muted-foreground hover:text-foreground transition-colors">
+              <button onClick={handleClose} className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
                 <X size={20} />
               </button>
             </div>
@@ -94,7 +94,7 @@ export function BreedFilter({ breeds, selected, onSelect }: BreedFilterProps) {
             <div className="flex flex-wrap gap-1.5 px-4 py-3 border-b border-border flex-shrink-0">
               <button
                 onClick={() => setSelectedLetter(null)}
-                className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all hover:scale-105 ${
+                className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all hover:scale-105 cursor-pointer ${
                   selectedLetter === null
                     ? "bg-primary text-primary-foreground"
                     : "border border-border text-muted-foreground hover:text-foreground"
@@ -106,7 +106,7 @@ export function BreedFilter({ breeds, selected, onSelect }: BreedFilterProps) {
                 <button
                   key={letter}
                   onClick={() => setSelectedLetter(letter === selectedLetter ? null : letter)}
-                  className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all hover:scale-105 ${
+                  className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all hover:scale-105 cursor-pointer ${
                     selectedLetter === letter
                       ? "bg-primary text-primary-foreground"
                       : "border border-border text-muted-foreground hover:text-foreground"
@@ -122,7 +122,7 @@ export function BreedFilter({ breeds, selected, onSelect }: BreedFilterProps) {
                 {!selectedLetter && (
                   <button
                     onClick={() => handleSelect("")}
-                    className={`px-3 py-2 rounded-lg text-sm transition-all duration-200 hover:scale-105 ${
+                    className={`px-3 py-2 rounded-lg text-sm transition-all duration-200 hover:scale-105 cursor-pointer ${
                       selected === ""
                         ? "bg-primary text-primary-foreground"
                         : "hover:bg-muted text-muted-foreground hover:text-foreground border border-border"
@@ -136,7 +136,7 @@ export function BreedFilter({ breeds, selected, onSelect }: BreedFilterProps) {
                   <button
                     key={breed.id}
                     onClick={() => handleSelect(breed.id)}
-                    className={`px-3 py-2 rounded-lg text-sm transition-all duration-200 hover:scale-105 ${
+                    className={`px-3 py-2 rounded-lg text-sm transition-all duration-200 hover:scale-105 cursor-pointer ${
                       selected === breed.id
                         ? "bg-primary text-primary-foreground"
                         : "hover:bg-muted text-muted-foreground hover:text-foreground border border-border"

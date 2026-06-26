@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { fetchFavorites, removeFavorite } from "@/lib/api";
 import { CatCard } from "@/components/CatCard";
+import { SkeletonCard } from "@/components/ui/SkeletonCard";
 import { Heart, ChevronLeft, ChevronRight } from "lucide-react";
 import { useLocale } from "@/components/LocaleContext";
 
@@ -79,8 +80,10 @@ export default function FavoritesPage() {
 
   if (loading && favorites.length === 0) {
     return (
-      <div className="flex items-center justify-center h-96">
-        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 min-h-[600px] content-start">
+        {Array.from({ length: ITEMS_PER_PAGE }).map((_, i) => (
+          <SkeletonCard key={`skeleton-${i}`} />
+        ))}
       </div>
     );
   }
@@ -125,7 +128,7 @@ export default function FavoritesPage() {
           <button
             onClick={() => setCurrentPage((p) => Math.max(0, p - 1))}
             disabled={currentPage === 0}
-            className="w-9 h-9 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            className="w-9 h-9 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary hover:bg-primary/10 hover:scale-110 transition-all duration-150 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
           >
             <ChevronLeft size={16} />
           </button>
@@ -134,10 +137,10 @@ export default function FavoritesPage() {
             <button
               key={i}
               onClick={() => setCurrentPage(i)}
-              className={`w-9 h-9 rounded-lg border text-sm font-medium transition-colors ${
+              className={`w-9 h-9 rounded-lg border text-sm font-medium transition-all duration-150 cursor-pointer hover:scale-110 ${
                 currentPage === i
-                  ? "border-primary text-primary bg-primary/10"
-                  : "border-border text-muted-foreground hover:text-primary hover:border-primary"
+                  ? "border-primary text-primary bg-primary/10 shadow-sm shadow-primary/30"
+                  : "border-border text-muted-foreground hover:text-primary hover:border-primary hover:bg-primary/10 hover:shadow-sm hover:shadow-primary/20"
               }`}
             >
               {i + 1}
@@ -147,7 +150,7 @@ export default function FavoritesPage() {
           <button
             onClick={() => setCurrentPage((p) => Math.min(totalPages - 1, p + 1))}
             disabled={currentPage === totalPages - 1}
-            className="w-9 h-9 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+            className="w-9 h-9 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary hover:bg-primary/10 hover:scale-110 transition-all duration-150 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
           >
             <ChevronRight size={16} />
           </button>

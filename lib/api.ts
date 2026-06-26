@@ -2,10 +2,12 @@ const API_KEY = process.env.NEXT_PUBLIC_CAT_API_KEY;
 const BASE_URL = "https://api.thecatapi.com/v1";
 const SUB_ID = "user-default"; // identificador fixo do usuário
 
+export const PAGE_LIMIT = 12;
+
 export async function fetchCats(page: number = 0, breedId?: string) {
   try {
     const params = new URLSearchParams({
-      limit: "12",
+      limit: String(PAGE_LIMIT),
       page: String(page),
       has_breeds: "1",
       ...(breedId && { breed_ids: breedId }),
@@ -15,8 +17,14 @@ export async function fetchCats(page: number = 0, breedId?: string) {
       headers: { "x-api-key": API_KEY! },
     });
 
+    if (!res.ok) {
+      console.error(`fetchCats falhou: status ${res.status} (${res.statusText})`);
+      return [];
+    }
+
     return res.json();
-  } catch {
+  } catch (err) {
+    console.error("fetchCats erro de rede:", err);
     return [];
   }
 }
@@ -26,8 +34,13 @@ export async function fetchBreeds() {
     const res = await fetch(`${BASE_URL}/breeds`, {
       headers: { "x-api-key": API_KEY! },
     });
+    if (!res.ok) {
+      console.error(`fetchBreeds falhou: status ${res.status}`);
+      return [];
+    }
     return res.json();
-  } catch {
+  } catch (err) {
+    console.error("fetchBreeds erro de rede:", err);
     return [];
   }
 }
@@ -37,8 +50,13 @@ export async function fetchFavorites() {
     const res = await fetch(`${BASE_URL}/favourites?sub_id=${SUB_ID}`, {
       headers: { "x-api-key": API_KEY! },
     });
+    if (!res.ok) {
+      console.error(`fetchFavorites falhou: status ${res.status}`);
+      return [];
+    }
     return res.json();
-  } catch {
+  } catch (err) {
+    console.error("fetchFavorites erro de rede:", err);
     return [];
   }
 }

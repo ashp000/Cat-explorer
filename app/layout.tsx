@@ -10,6 +10,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "CatExplorer",
   description: "Explore and favorite cats from around the world",
+  icons: {
+    icon: "/cat-dark.png",
+  },
 };
 
 export default function RootLayout({
@@ -23,7 +26,7 @@ export default function RootLayout({
         <ThemeProvider>
           <LocaleProvider>
             <Navbar />
-            <main className="max-w-6xl mx-auto px-4 py-8">
+            <main className="max-w-6xl mx-auto px-4 pt-24 pb-8">
               {children}
             </main>
           </LocaleProvider>
