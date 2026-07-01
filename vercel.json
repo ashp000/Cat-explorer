@@ -1,5 +1,0 @@
-{
-  "buildCommand": "cd cat-company/apps/web && npm install && npm run build",
-  "outputDirectory": "cat-company/apps/web/.next",
-  "framework": null
-}
